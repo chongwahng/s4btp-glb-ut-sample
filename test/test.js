@@ -1,19 +1,5 @@
 const cds = require("@sap/cds/lib");
-const {
-    expect,
-    GET,
-    POST,
-    PATCH,
-    DEL,
-    data
-} = cds.test(
-    "serve",
-    "--in-memory",
-    "--project",
-    `${__dirname}/..`
-)
-if (cds.User.default) cds.User.default = cds.User.Privileged // hard core monkey patch
-else cds.User = cds.User.Privileged // hard core monkey patch for older cds releases
+const { expect, GET, POST, PATCH, DEL, data } = cds.test("serve", "--in-memory", "--project", `${__dirname}/..`)
 
 describe("running simple unit test", () => {
     before(() => { })
