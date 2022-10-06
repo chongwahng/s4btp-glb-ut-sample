@@ -5,8 +5,7 @@ const {
     POST,
     PATCH,
     DEL,
-    data,
-    axios
+    data
 } = cds.test(
     "serve",
     "--in-memory",
@@ -31,5 +30,5 @@ describe("checking that it is running with false", () => {
             status
         } = await GET("/user/$metadata", {});
         expect(status).to.equal(200);
-    });
-});
+    })
+})
