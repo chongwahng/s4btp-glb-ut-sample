@@ -12,6 +12,8 @@ const {
     "--project",
     `${__dirname}/..`
 )
+if (cds.User.default) cds.User.default = cds.User.Privileged // hard core monkey patch
+else cds.User = cds.User.Privileged // hard core monkey patch for older cds releases
 
 describe("running simple unit test", () => {
     before(() => { })
