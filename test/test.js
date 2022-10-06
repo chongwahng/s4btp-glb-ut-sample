@@ -5,13 +5,16 @@ const {
     POST,
     PATCH,
     DEL,
-    data
+    data,
+    axios
 } = cds.test(
     "serve",
     "--in-memory",
     "--project",
     `${__dirname}/..`
-);
+)
+axios.defaults.auth = { username: 'alice', password: 'admin' }
+
 describe("checking that it is running with false", () => {
 
     it('Allows testing programmatic APIs', async () => {
