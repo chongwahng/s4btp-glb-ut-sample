@@ -12,9 +12,9 @@ const {
     "--project",
     `${__dirname}/..`
 )
-axios.defaults.auth = { username: 'alice', password: 'admin' }
 
-describe("checking that it is running with false", () => {
+describe("running simple unit test", () => {
+    before(() => { })
 
     it('Allows testing programmatic APIs', async () => {
         const UserService = await cds.connect.to('UserService')
