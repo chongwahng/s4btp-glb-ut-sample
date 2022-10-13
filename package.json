@@ -18,7 +18,8 @@
     "sqlite3": "^5.0.4"
   },
   "scripts": {
-    "start": "cds run"
+    "start": "cds run",
+    "mocha": "npx mocha --timeout 10000"
   },
   "engines": {
     "node": "^16.15"

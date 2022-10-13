@@ -1,13 +1,16 @@
 const cds = require("@sap/cds/lib");
-const { expect, GET, POST, PATCH, DEL, data } = cds.test("serve", "--in-memory", "--project", `${__dirname}/..`)
+const { expect, GET, POST, PATCH, DEL } = cds.test("serve", "--in-memory", "--project", `${__dirname}/..`)
 
-describe("running simple unit test", () => {
+describe("***** Running unit test *****", () => {
     beforeAll(async () => {
         const db = await cds.connect.to('db')
         const { Users } = db.model.entities('db')
         await db.create(Users).entries([
             { ID: 'USR01', name: 'user 1 created in cds.test', dateOfBirth: '1990-01-20', email: 'usr01@gmail.com', isLock: false },
-            { ID: 'USR02', name: 'user 2 created in cds.test', dateOfBirth: '1992-02-20', email: 'usr02@gmail.com', isLock: false }
+            { ID: 'USR02', name: 'user 2 created in cds.test', dateOfBirth: '1992-02-20', email: 'usr02@gmail.com', isLock: false },
+            { ID: 'USR03', name: 'user 3 created in cds.test', dateOfBirth: '1992-03-20', email: 'usr03@gmail.com', isLock: false },
+            { ID: 'USR04', name: 'user 4 created in cds.test', dateOfBirth: '1992-04-20', email: 'usr04@gmail.com', isLock: false },
+            { ID: 'USR05', name: 'user 5 created in cds.test', dateOfBirth: '1992-05-20', email: 'usr05@gmail.com', isLock: false },
         ])
     })
 
@@ -33,17 +36,58 @@ describe("running simple unit test", () => {
         const { data } = await GET(`/user/Users`)
         expect(data.value).to.eql([
             { ID: 'USR01', name: 'user 1 created in cds.test', dateOfBirth: '1990-01-20', email: 'usr01@gmail.com', isLock: false },
-            { ID: 'USR02', name: 'user 2 created in cds.test', dateOfBirth: '1992-02-20', email: 'usr02@gmail.com', isLock: false }
+            { ID: 'USR02', name: 'user 2 created in cds.test', dateOfBirth: '1992-02-20', email: 'usr02@gmail.com', isLock: false },
+            { ID: 'USR03', name: 'user 3 created in cds.test', dateOfBirth: '1992-03-20', email: 'usr03@gmail.com', isLock: false },
+            { ID: 'USR04', name: 'user 4 created in cds.test', dateOfBirth: '1992-04-20', email: 'usr04@gmail.com', isLock: false },
+            { ID: 'USR05', name: 'user 5 created in cds.test', dateOfBirth: '1992-05-20', email: 'usr05@gmail.com', isLock: false }
         ])
+    })
+
+    it(`[Test]: serves /user/lockAccount('USR01')`, async () => {
+        await POST(`/user/lockAccount`, {
+            id: 'USR01'
+        })
+        const { data } = await GET(`/user/Users('USR01')`, {
+            params: { $select: `isLock` }
+        })
+        expect(data.isLock).to.eql(true)
+    })
+
+    it(`[Test]: serves /user/unlockAccount('USR01')`, async () => {
+        await POST(`/user/unlockAccount`, {
+            id: 'USR01'
+        })
+        const { data } = await GET(`/user/Users('USR01')`, {
+            params: { $select: `isLock` }
+        })
+        expect(data.isLock).to.eql(false)
     })
 
     it('[Test]: supports $select', async () => {
         const { data } = await GET(`/user/Users`, {
-            params: { $select: `ID, name, email` }
+            params: { $select: `ID,name,email` }
         })
         expect(data.value).to.eql([
             { ID: 'USR01', name: 'user 1 created in cds.test', email: 'usr01@gmail.com' },
-            { ID: 'USR02', name: 'user 2 created in cds.test', email: 'usr02@gmail.com' }
+            { ID: 'USR02', name: 'user 2 created in cds.test', email: 'usr02@gmail.com' },
+            { ID: 'USR03', name: 'user 3 created in cds.test', email: 'usr03@gmail.com' },
+            { ID: 'USR04', name: 'user 4 created in cds.test', email: 'usr04@gmail.com' },
+            { ID: 'USR05', name: 'user 5 created in cds.test', email: 'usr05@gmail.com' }
+        ])
+    })
+
+    it('[Test]: supports $top/$skip paging', async () => {
+        const { data: p1 } = await GET(`/user/Users?$select=name&$top=3`)
+        expect(p1.value).to.eql([
+            { ID: 'USR01', name: 'user 1 created in cds.test' },
+            { ID: 'USR02', name: 'user 2 created in cds.test' },
+            { ID: 'USR03', name: 'user 3 created in cds.test' }
+        ])
+
+        const { data: p2 } = await GET(`/user/Users?$select=name&$skip=3`)
+        expect(p2.value).to.eql([
+            { ID: 'USR04', name: 'user 4 created in cds.test' },
+            { ID: 'USR05', name: 'user 5 created in cds.test' }
         ])
     })
 })
