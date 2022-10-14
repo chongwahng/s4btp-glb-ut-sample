@@ -4,3 +4,6 @@ Content-Type: application/json
 {
     "id": "USR01"
 }
+
+###
+GET http://localhost:4004/api/userInfo()

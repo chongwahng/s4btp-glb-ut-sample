@@ -1,0 +1,11 @@
+ID;name;dateOfBirth;email;isLock;department
+USR01;user name 01;1990-01-20;usr01@gmail.com;false;SALE
+USR02;user name 02;1990-02-20;usr02@gmail.com;false;SALE
+USR03;user name 03;1990-03-20;usr03@gmail.com;false;WHSE
+USR04;user name 04;1990-04-20;usr04@gmail.com;false;WHSE
+USR05;user name 05;1990-05-20;usr05@gmail.com;false;SHIP
+USR06;user name 06;1990-06-20;usr06@gmail.com;false;SHIP
+USR07;user name 07;1990-07-20;usr07@gmail.com;false;SHIP
+USR08;user name 08;1990-08-20;usr08@gmail.com;false;COES
+USR09;user name 09;1990-09-20;usr09@gmail.com;false;COES
+USR10;user name 10;1990-10-20;usr10@gmail.com;false;COES
