@@ -8,12 +8,11 @@ service UserService @(path : '/user') {
     action unlockAccount(id : Users:ID);
 }
 
-service APIService @(
-    requires : 'authenticated-user',
-    path     : '/api'
-) {
-    function userInfo() returns String;
+service APIService @(path : '/api') {
+    function myUserInfo() returns String;
 }
+
+annotate APIService with @(requires : 'authenticated-user');
 
 annotate UserService.Users with @(restrict : [{
     grant : '*',

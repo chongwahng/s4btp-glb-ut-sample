@@ -15,19 +15,15 @@ module.exports = async function (srv) {
         await cds.run(query)
     })
 
-    srv.on("userInfo", async (req) => {
-        var token = retrieveJwt(req)
+    srv.on("myUserInfo", async (req) => {
+        let token = retrieveJwt(req)
 
-        console.log(`User data -> ${JSON.stringify(req.user)}`)
-        console.log(`User ID -> ${req.user.id}`)
-        console.log(`User attr -> ${JSON.stringify(req.user.attr)}`)
-        console.log(`Is user authenticated? ${req.user.is('authenticated-user')}`)
-        console.log(`Is system-user? ${req.user.is('system-user')}`)
-        console.log(`Is internal-user? ${req.user.is('internal-user')}`)
+        console.log(`*** user data -> ${JSON.stringify(req.user)}`)
 
         if (token) {
-            var decodedJWT = decodeJwtComplete(token)
+            let decodedJWT = decodeJwtComplete(token)
             console.log(decodedJWT)
+            console.log(`*** JWT payload.xs.user.attributes -> ${JSON.stringify(decodedJWT.payload["xs.user.attributes"])}`)
             return JSON.stringify(decodedJWT)
         }
     })
