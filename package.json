@@ -54,22 +54,32 @@
     }
   },
   "cds": {
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
     "requires": {
-      "db": {
-        "kind": "hana-cloud",
-        "credentials": {
-          "database": "sqlite.db"
+      "auth": {
+        "[development]": {
+          "kind": "dummy"
+        },
+        "[production]": {
+          "kind": "xsuaa"
         }
       },
-      "auth": {
-        "kind": "xsuaa"
-      },
+      "db": {
+        "[development]": {
+            "kind": "sqlite",
+            "credentials": {
+                "database": "sqlite.db"
+            }
+        },
+        "[production]": {
+            "kind": "hana"
+        }
+    },
       "approuter": {
         "kind": "cloudfoundry"
       }
-    },
-    "hana": {
-      "deploy-format": "hdbtable"
     }
   }
 }

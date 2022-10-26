@@ -6,5 +6,5 @@ entity Users {
         dateOfBirth : Date;
         email       : String(100);
         isLock      : Boolean;
-        department  : String(4);
+        company     : String(4);
 }

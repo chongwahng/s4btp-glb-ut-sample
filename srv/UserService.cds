@@ -17,5 +17,5 @@ annotate APIService with @(requires : 'authenticated-user');
 annotate UserService.Users with @(restrict : [{
     grant : '*',
     to    : 'Admin',
-    where : '$user.Department = department'
+    where : '$user.company_code = company'
 }]);

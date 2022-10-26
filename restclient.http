@@ -6,4 +6,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:4004/api/userInfo()
+GET http://localhost:4004/api/myUserInfo()

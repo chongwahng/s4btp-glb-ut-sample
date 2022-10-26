@@ -7,22 +7,22 @@
     ],
     "attributes": [
         {
-            "name": "Department",
-            "description": "Department",
+            "name": "company_code",
+            "description": "Company code",
             "valueType": "s",
             "valueRequired": false
         }
     ],
     "role-templates": [
         {
-            "name": "Admin",
-            "description": "generated",
+            "name": "AdminTemplate",
+            "description": "generated role template - Admin",
             "scope-references": [
                 "$XSAPPNAME.Admin"
             ],
             "attribute-references": [
                 {
-                    "name": "Department"
+                    "name": "company_code"
                 }
             ]
         }

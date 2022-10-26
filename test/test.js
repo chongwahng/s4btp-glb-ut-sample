@@ -1,16 +1,18 @@
 const cds = require("@sap/cds/lib");
-const { expect, GET, POST, PATCH, DEL } = cds.test("serve", "--in-memory", "--project", `${__dirname}/..`)
+const { expect, GET, POST, PATCH, DEL, axios } = cds.test("serve", "--in-memory", "--project", `${__dirname}/..`)
 
 describe("***** Running unit test *****", () => {
     beforeAll(async () => {
         const db = await cds.connect.to('db')
         const { Users } = db.model.entities('db')
+
+        await db.delete(Users)
         await db.create(Users).entries([
-            { ID: 'USR01', name: 'user 1 created in cds.test', dateOfBirth: '1990-01-20', email: 'usr01@gmail.com', isLock: false },
-            { ID: 'USR02', name: 'user 2 created in cds.test', dateOfBirth: '1992-02-20', email: 'usr02@gmail.com', isLock: false },
-            { ID: 'USR03', name: 'user 3 created in cds.test', dateOfBirth: '1992-03-20', email: 'usr03@gmail.com', isLock: false },
-            { ID: 'USR04', name: 'user 4 created in cds.test', dateOfBirth: '1992-04-20', email: 'usr04@gmail.com', isLock: false },
-            { ID: 'USR05', name: 'user 5 created in cds.test', dateOfBirth: '1992-05-20', email: 'usr05@gmail.com', isLock: false },
+            { ID: 'USR01', name: 'user 1 created in cds.test', dateOfBirth: '1990-01-20', email: 'usr1@gmail.com', isLock: false, company: 'AU01' },
+            { ID: 'USR02', name: 'user 2 created in cds.test', dateOfBirth: '1990-02-20', email: 'usr2@gmail.com', isLock: false, company: 'AU01' },
+            { ID: 'USR03', name: 'user 3 created in cds.test', dateOfBirth: '1990-03-20', email: 'usr3@gmail.com', isLock: false, company: 'AU01' },
+            { ID: 'USR04', name: 'user 4 created in cds.test', dateOfBirth: '1990-04-20', email: 'usr4@gmail.com', isLock: false, company: 'AU01' },
+            { ID: 'USR05', name: 'user 5 created in cds.test', dateOfBirth: '1990-05-20', email: 'usr5@gmail.com', isLock: false, company: 'AU01' },
         ])
     })
 
@@ -18,7 +20,7 @@ describe("***** Running unit test *****", () => {
         const UserService = await cds.connect.to('UserService')
         const { Users } = UserService.entities
         expect(await SELECT.from(Users))
-            .to.eql(await UserService.read(Users))
+            //.to.eql(await UserService.read(Users))
             .to.eql(await UserService.run(SELECT.from(Users)))
     })
 
@@ -35,11 +37,11 @@ describe("***** Running unit test *****", () => {
     it('[Test]: serves /user/Users', async () => {
         const { data } = await GET(`/user/Users`)
         expect(data.value).to.eql([
-            { ID: 'USR01', name: 'user 1 created in cds.test', dateOfBirth: '1990-01-20', email: 'usr01@gmail.com', isLock: false },
-            { ID: 'USR02', name: 'user 2 created in cds.test', dateOfBirth: '1992-02-20', email: 'usr02@gmail.com', isLock: false },
-            { ID: 'USR03', name: 'user 3 created in cds.test', dateOfBirth: '1992-03-20', email: 'usr03@gmail.com', isLock: false },
-            { ID: 'USR04', name: 'user 4 created in cds.test', dateOfBirth: '1992-04-20', email: 'usr04@gmail.com', isLock: false },
-            { ID: 'USR05', name: 'user 5 created in cds.test', dateOfBirth: '1992-05-20', email: 'usr05@gmail.com', isLock: false }
+            { ID: 'USR01', name: 'user 1 created in cds.test', dateOfBirth: '1990-01-20', email: 'usr1@gmail.com', isLock: false, company: 'AU01' },
+            { ID: 'USR02', name: 'user 2 created in cds.test', dateOfBirth: '1990-02-20', email: 'usr2@gmail.com', isLock: false, company: 'AU01' },
+            { ID: 'USR03', name: 'user 3 created in cds.test', dateOfBirth: '1990-03-20', email: 'usr3@gmail.com', isLock: false, company: 'AU01' },
+            { ID: 'USR04', name: 'user 4 created in cds.test', dateOfBirth: '1990-04-20', email: 'usr4@gmail.com', isLock: false, company: 'AU01' },
+            { ID: 'USR05', name: 'user 5 created in cds.test', dateOfBirth: '1990-05-20', email: 'usr5@gmail.com', isLock: false, company: 'AU01' },
         ])
     })
 
@@ -68,11 +70,11 @@ describe("***** Running unit test *****", () => {
             params: { $select: `ID,name,email` }
         })
         expect(data.value).to.eql([
-            { ID: 'USR01', name: 'user 1 created in cds.test', email: 'usr01@gmail.com' },
-            { ID: 'USR02', name: 'user 2 created in cds.test', email: 'usr02@gmail.com' },
-            { ID: 'USR03', name: 'user 3 created in cds.test', email: 'usr03@gmail.com' },
-            { ID: 'USR04', name: 'user 4 created in cds.test', email: 'usr04@gmail.com' },
-            { ID: 'USR05', name: 'user 5 created in cds.test', email: 'usr05@gmail.com' }
+            { ID: 'USR01', name: 'user 1 created in cds.test', email: 'usr1@gmail.com' },
+            { ID: 'USR02', name: 'user 2 created in cds.test', email: 'usr2@gmail.com' },
+            { ID: 'USR03', name: 'user 3 created in cds.test', email: 'usr3@gmail.com' },
+            { ID: 'USR04', name: 'user 4 created in cds.test', email: 'usr4@gmail.com' },
+            { ID: 'USR05', name: 'user 5 created in cds.test', email: 'usr5@gmail.com' }
         ])
     })
 
