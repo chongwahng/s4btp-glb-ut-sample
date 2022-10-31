@@ -17,10 +17,10 @@ describe("***** Running unit test *****", () => {
     })
 
     it('[Test]: service APIs', async () => {
-        const UserService = await cds.connect.to('UserService')
+        const UserService = await cds.connect.to('db')
         const { Users } = UserService.entities
         expect(await SELECT.from(Users))
-            //.to.eql(await UserService.read(Users))
+            .to.eql(await UserService.read(Users))
             .to.eql(await UserService.run(SELECT.from(Users)))
     })
 
