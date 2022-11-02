@@ -1,85 +1,85 @@
 {
-  "name": "s4btp-glb-ut-sample",
-  "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
-  "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "@sap-cloud-sdk/core": "^1.54.2",
-    "@sap/cds": "^6",
-    "@sap/xssec": "^3",
-    "express": "^4",
-    "hdb": "^0.19.0",
-    "passport": "^0"
-  },
-  "devDependencies": {
-    "axios": "^0.x",
-    "chai": "^4.3.6",
-    "chai-as-promised": "^7.1.1",
-    "chai-subset": "^1.6.0",
-    "jest": "^29.1.2",
-    "sqlite3": "^5.0.4"
-  },
-  "scripts": {
-    "start": "cds run",
-    "mocha": "npx mocha --timeout 10000"
-  },
-  "engines": {
-    "node": "^16.15"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "env": {
-      "es2020": true,
-      "node": true,
-      "jest": true,
-      "mocha": true
+    "name": "s4btp-glb-ut-sample",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap-cloud-sdk/core": "^1.54.2",
+        "@sap/cds": "^6",
+        "@sap/xssec": "^3",
+        "express": "^4",
+        "hdb": "^0.19.0",
+        "passport": "^0"
     },
-    "globals": {
-      "SELECT": true,
-      "INSERT": true,
-      "UPDATE": true,
-      "DELETE": true,
-      "CREATE": true,
-      "DROP": true,
-      "CDL": true,
-      "CQL": true,
-      "CXL": true,
-      "cds": true
+    "devDependencies": {
+        "axios": "^0.x",
+        "chai": "^4.3.6",
+        "chai-as-promised": "^7.1.1",
+        "chai-subset": "^1.6.0",
+        "jest": "^29.1.2",
+        "sqlite3": "^5.0.4"
     },
-    "rules": {
-      "no-console": "off",
-      "require-atomic-updates": "off"
-    }
-  },
-  "cds": {
-    "hana": {
-      "deploy-format": "hdbtable"
+    "scripts": {
+        "start": "cds run",
+        "mocha": "npx mocha --timeout 10000"
     },
-    "requires": {
-      "auth": {
-        "[development]": {
-          "kind": "dummy"
+    "engines": {
+        "node": "^16.15"
+    },
+    "eslintConfig": {
+        "extends": "eslint:recommended",
+        "env": {
+            "es2020": true,
+            "node": true,
+            "jest": true,
+            "mocha": true
         },
-        "[production]": {
-          "kind": "xsuaa"
+        "globals": {
+            "SELECT": true,
+            "INSERT": true,
+            "UPDATE": true,
+            "DELETE": true,
+            "CREATE": true,
+            "DROP": true,
+            "CDL": true,
+            "CQL": true,
+            "CXL": true,
+            "cds": true
+        },
+        "rules": {
+            "no-console": "off",
+            "require-atomic-updates": "off"
         }
-      },
-      "db": {
-        "[development]": {
-            "kind": "sqlite",
-            "credentials": {
-                "database": "sqlite.db"
+    },
+    "cds": {
+        "hana": {
+            "deploy-format": "hdbtable"
+        },
+        "requires": {
+            "auth": {
+                "[development]": {
+                    "kind": "dummy"
+                },
+                "[production]": {
+                    "kind": "xsuaa"
+                }
+            },
+            "db": {
+                "[development]": {
+                    "kind": "sqlite",
+                    "credentials": {
+                        "database": "sqlite.db"
+                    }
+                },
+                "[production]": {
+                    "kind": "hana"
+                }
+            },
+            "approuter": {
+                "kind": "cloudfoundry"
             }
-        },
-        "[production]": {
-            "kind": "hana"
         }
-    },
-      "approuter": {
-        "kind": "cloudfoundry"
-      }
     }
-  }
 }
